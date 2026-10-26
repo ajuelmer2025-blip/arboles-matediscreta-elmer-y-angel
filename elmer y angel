@@ -1,0 +1,64 @@
+#include <iostream>
+using namespace std;
+
+struct Nodo {
+    int dato;
+    Nodo* izq;
+    Nodo* der;
+    Nodo(int d){ dato=d; izq=der=NULL; }
+};
+
+Nodo* insertar(Nodo* r, int d){
+    if(r==NULL) return new Nodo(d);
+    if(d < r->dato) r->izq = insertar(r->izq, d);
+    else r->der = insertar(r->der, d);
+    return r;
+}
+
+void preorden(Nodo* r){
+    if(r){ cout<<r->dato<<" "; preorden(r->izq); preorden(r->der); }
+}
+void inorden(Nodo* r){
+    if(r){ inorden(r->izq); cout<<r->dato<<" "; inorden(r->der); }
+}
+void posorden(Nodo* r){
+    if(r){ posorden(r->izq); posorden(r->der); cout<<r->dato<<" "; }
+}
+
+int main(){
+    Nodo* raiz = NULL;
+    int op, valor;
+    
+    do{
+        cout<<"\n--- MENU ARBOLES - ELMER Y ANGEL ---"<<endl;
+        cout<<"1. Insertar dato"<<endl;
+        cout<<"2. Mostrar Preorden"<<endl;
+        cout<<"3. Mostrar Inorden"<<endl;
+        cout<<"4. Mostrar Posorden"<<endl;
+        cout<<"5. Salir"<<endl;
+        cout<<"Elige opcion: ";
+        cin>>op;
+        
+        switch(op){
+            case 1:
+                cout<<"Ingresa valor: ";
+                cin>>valor;
+                raiz = insertar(raiz, valor);
+                cout<<"Dato insertado!"<<endl;
+                break;
+            case 2:
+                cout<<"Preorden: "; preorden(raiz); cout<<endl;
+                break;
+            case 3:
+                cout<<"Inorden: "; inorden(raiz); cout<<endl;
+                break;
+            case 4:
+                cout<<"Posorden: "; posorden(raiz); cout<<endl;
+                break;
+            case 5:
+                cout<<"Saliendo..."<<endl;
+                break;
+        }
+    }while(op!=5);
+    return 0;
+}
